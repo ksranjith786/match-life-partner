@@ -111,6 +111,7 @@ def queryUserAccountFromDB(colName="", value=""):
 
     try:
         look_for = '%{0}%'.format(value)
+        print(f'Debug | value={look_for} of column={colName}')
         rs = None
         if colName == "email":
             rs = db_session.query(UsersAccount).filter(UsersAccount.email.ilike(look_for))
