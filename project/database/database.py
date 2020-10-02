@@ -138,7 +138,7 @@ def queryUserFromDB(colName="", value=""):
         if colName == "email":
             rs = db_session.query(User).filter(User.email.ilike(look_for))
         if colName == "loginid":
-            rs = db_session.query(User).filter(User.loginid.ilike(look_for))
+            rs = db_session.query(User).filter(User.loginid == value)
         if colName == "fname":
             rs = db_session.query(User).filter(User.fname.ilike(look_for))
         if colName == "lname":
