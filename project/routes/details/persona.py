@@ -16,7 +16,6 @@ def persona():
         return msg
     
     for result in rs:
-        print(f'Password Entered is {password} and stored in Database is {result.password}')
         if check_password_hash(result.password, request.form.get("pass", type = str)):
             msg = "Login granted"
         else:

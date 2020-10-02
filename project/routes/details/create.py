@@ -12,7 +12,6 @@ def create():
     if request.form.get("pass", type = str) != request.form.get("cpass", type = str):
         return "Error: Password and Confirm Password do not match!"
 
-    password = generate_password_hash(request.form.get("pass", type = str), method='sha256', salt_length=16)
     fname = request.form.get("fname", type = str)
     lname = request.form.get("lname", type = str)
     age = request.form.get("age", type = int)
@@ -22,7 +21,7 @@ def create():
     country = request.form.get("country", default="India", type = str)
     address = request.form.get("address", default="", type = str)
 
-    print(f'Ranjith | First Name {fname}; Last Name {lname}')
+    password = generate_password_hash(request.form.get("pass", type = str), method='sha256', salt_length=16)
 
     retVal = addUserDetailsToDB(email=email, password=password, fname=fname, lname=lname, age=age, gender=gender, city=city, state=state, country=country)
 
