@@ -82,21 +82,29 @@ def addUserDetailsToDB(email="", password="", fname="", lname="", age=18, gender
         db_session.commit()
 
         rs = queryUserAccountFromDB(colName='email', value=email)
-        loginId=0
-        for result in rs:
-            loginId=result.id
-            print(f'UserAccount Table is added with {result.email} with returned loginid as {result.id}')
+        loginId = 0
 
-    except:
+        if rs is None:
+            print("Error while adding email to UserAccount Table")
+            return False
+        
+        for result in rs:
+            loginId = result.id
+            #print(f'UserAccount Table is added with {result.email} with returned loginid as {result.id}')
+
+    except Exception as error:
         print("Exception caught while adding user email and password to UsersAccount Table")
+        print(str(error.orig) + " for parameters" + str(error.params))
         return False
 
     try:
         user.loginid = loginId
         db_session.add(user)
         db_session.commit()
-    except:
+    
+    except Exception as error:
         print("Exception caught while adding user record to Users Table")
+        print(str(error.orig) + " for parameters" + str(error.params))
         return False
 
     return True
@@ -117,9 +125,17 @@ def queryUserAccountFromDB(colName="", value=""):
             rs = db_session.query(UsersAccount).filter(UsersAccount.email.ilike(look_for))
         else:
             pass
-
-    except:
+        
+        id = 0
+        for result in rs:
+            id = result.id
+        # When the rs is empty, the id field is not updated; Hence, the database query did not result anything.
+        if id == 0:
+            return None
+        
+    except Exception as error:
         print("Exception caught while querying UserAccount from Database")
+        print(str(error.orig) + " for parameters" + str(error.params))
         return None
 
     #print("No.of Records matched:", noOfRecords)
@@ -138,23 +154,28 @@ def queryUserFromDB(colName="", value=""):
         rs = None
         if colName == "email":
             rs = db_session.query(User).filter(User.email.ilike(look_for))
-        if colName == "loginid":
+        elif colName == "loginid":
             rs = db_session.query(User).filter(User.loginid == value)
-        if colName == "fname":
+        elif colName == "fname":
             rs = db_session.query(User).filter(User.fname.ilike(look_for))
-        if colName == "lname":
+        elif colName == "lname":
             rs = db_session.query(User).filter(User.lname.ilike(look_for))
-        if colName == "city":
+        elif colName == "city":
             rs = db_session.query(User).filter(User.city.ilike(look_for))
-        if colName == "state":
+        elif colName == "state":
             rs = db_session.query(User).filter(User.state.ilike(look_for))
-        if colName == "country":
+        elif colName == "country":
             rs = db_session.query(User).filter(User.country.ilike(look_for))
         else:
             pass
 
-    except:
+        for result in rs:
+            if not result:
+                return None
+
+    except Exception as error:
         print("Exception caught while querying User from Database")
+        print(str(error.orig) + " for parameters" + str(error.params))
         return None
 
     #print("No.of Records matched:", noOfRecords)

@@ -15,15 +15,15 @@ def persona():
         msg = "No such Email to fetch an User"
         return msg
     
-    loginIdFromDB = 0
+    loginId = 0
     for result in rs:
         if check_password_hash(result.password, request.form.get("pass", type = str)):
-            loginIdFromDB = result.id
+            loginId = result.id
             msg = "Login granted"
         else:
             return "Invalid Credentials! Please try again."
 
-    rs = queryUserFromDB("loginid", loginIdFromDB)
+    rs = queryUserFromDB("loginid", loginId)
     if rs is None:
         msg = "No such Email to fetch an User"
         return msg

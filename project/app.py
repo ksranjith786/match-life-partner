@@ -33,6 +33,9 @@ def get_config(app):
         app.debug = True
     else:
         app.debug = False
+
+    envSECRETKEY = environ.get('SECRET_KEY', b'_5#y2L"F4Q8z\n\xec]/')
+    app.secret_key = envSECRETKEY
 # end get_config
 
 def create_db():

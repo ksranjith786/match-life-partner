@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, url_for, request, redirect, flash
 from werkzeug.security import generate_password_hash
 
 from database.database import addUserDetailsToDB
@@ -24,10 +24,12 @@ def create():
     password = generate_password_hash(request.form.get("pass", type = str), method='sha256', salt_length=16)
 
     retVal = addUserDetailsToDB(email=email, password=password, fname=fname, lname=lname, age=age, gender=gender, city=city, state=state, country=country)
-
+    msg = "Exception caught while creating and adding User Details to Database"
     if retVal == False:
-        print("Exception caught while creating and adding User Details to Database")
-        return False
+        print(msg)
+        return msg
 
-    return "Successfully added an User"
+    flash(message="Successfully registered! Please login to browse.", category="info")
+
+    return redirect(url_for('login.login'))
 # end create
