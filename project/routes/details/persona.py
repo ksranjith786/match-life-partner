@@ -36,5 +36,5 @@ def persona():
         user['State'] = result.state
         user['Country'] = result.country
 
-    return jsonify(user)
+    return render_template('details/basic.html', userFname=user['First Name'])
 # end persona

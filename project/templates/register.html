@@ -32,12 +32,26 @@
             font-family: montserrat, arial, verdana;
         }
 
-        /*form styles*/
-        #msform {
-            width: 400px;
-            margin: 50px auto;
-            text-align: center;
-            position: relative;
+        @media only screen and (min-width: 768px) {
+
+            /*form styles*/
+            #msform {
+                width: 85%;
+                margin: 100px auto;
+                text-align: center;
+                position: relative;
+            }
+        }
+
+        @media only screen and (min-width: 1280px) {
+
+            /*form styles*/
+            #msform {
+                width: 440px;
+                margin: 50px auto;
+                text-align: center;
+                position: relative;
+            }
         }
 
         #msform fieldset {
@@ -60,9 +74,21 @@
         }
 
         /*inputs*/
-        #msform input,
+        #msform input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+        }
+
+        /* input Text Area */
         #msform textarea {
-            padding: 15px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
             margin-bottom: 10px;
@@ -188,7 +214,7 @@
         <!-- fieldsets -->
         <fieldset>
             <h2 class="fs-title">Create your account</h2>
-            <h3 class="fs-subtitle">This is step 1</h3>
+            <h3 class="fs-subtitle">Provide the below details</h3>
             <input type="text" name="email" placeholder="Email" />
             <input type="password" name="pass" placeholder="Password" />
             <input type="password" name="cpass" placeholder="Confirm Password" />
@@ -199,10 +225,11 @@
             <h3 class="fs-subtitle">Your basic details, it is safe with us</h3>
             <input type="text" name="fname" placeholder="First Name" />
             <input type="text" name="lname" placeholder="Last Name" />
-            <h3 class="fs-subtitle">
-                Male <input name="gender" type="radio" value="Male" Checked />
-                Female<input name="gender" type="radio" value="Female" />
-            </h3>
+            <h3 class="fs-subtitle">Gender &nbsp;&nbsp; </h3>
+            <select name="gender">
+                <option value="male" selected>Male</option>
+                <option value="female">Female</option>
+            </select>
             <input type="number" name="age" placeholder="Age" min=18 max=60 />
             <input type="button" name="previous" class="previous action-button" value="Previous" />
             <input type="button" name="next" class="next action-button" value="Next" />
