@@ -3,23 +3,21 @@ from werkzeug.security import check_password_hash
 
 from database.database import UsersAccount, queryUserFromDB, queryUserAccountFromDB
 
-persona_bp = Blueprint('persona', __name__, url_prefix='/persona')
+query_bp = Blueprint('query', __name__, url_prefix='/query')
 
-@persona_bp.route('', methods=['GET', 'POST'])
-def persona():
-    email = request.form.get("email", type = str)
-    password = request.form.get("pass", type = str)
-    
+@query_bp.route('', methods=['GET'])
+def query():
+    email = request.form.get("email", default="test@test.com", type = str)
+    print(email)
     rs = queryUserAccountFromDB("email", email)
     if rs is None:
         msg = "No such Email to fetch an User"
         return msg
-    
+
     loginIdFromDB = 0
     for result in rs:
-        if check_password_hash(result.password, request.form.get("pass", type = str)):
+        if result:
             loginIdFromDB = result.id
-            msg = "Login granted"
         else:
             return "Invalid Credentials! Please try again."
 
@@ -28,8 +26,9 @@ def persona():
         msg = "No such Email to fetch an User"
         return msg
     
-    user = dict()
+    users = []
     for result in rs:
+        user = dict()
         user['First Name'] = result.fname
         user['Last Name'] = result.lname
         user['Age'] = result.age
@@ -37,6 +36,8 @@ def persona():
         user['City'] = result.city
         user['State'] = result.state
         user['Country'] = result.country
+        user['loginid'] = result.loginid
+        users.append(user)
 
-    return render_template('details/basic.html', userFname=user['First Name'])
-# end persona
+    return jsonify(users)
+# end query
