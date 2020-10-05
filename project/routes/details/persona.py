@@ -12,8 +12,8 @@ def persona():
     
     rs = queryUserAccountFromDB("email", email)
     if rs is None:
-        msg = "No such Email to fetch an User"
-        return msg
+        msg = "Your email is not available! Please register!"
+        return render_template('register.html', errorMessage=msg, email=email)
     
     loginId = 0
     for result in rs:
@@ -25,7 +25,7 @@ def persona():
 
     rs = queryUserFromDB("loginid", loginId)
     if rs is None:
-        msg = "No such Email to fetch an User"
+        msg = "Unable to fetch User Details!"
         return msg
     
     user = dict()
@@ -38,5 +38,5 @@ def persona():
         user['State'] = result.state
         user['Country'] = result.country
 
-    return render_template('details/basic.html', userFname=user['First Name'])
+    return render_template('details/basic.html', userFName=user['First Name'], userLName=user['Last Name'])
 # end persona

@@ -213,9 +213,14 @@
         </ul>
         <!-- fieldsets -->
         <fieldset>
+            <h2 class="fs-subtitle" style="color:Tomato; background-color: yellow;">{{ errorMessage }}</h2>
             <h2 class="fs-title">Create your account</h2>
-            <h3 class="fs-subtitle">Provide the below details</h3>
-            <input type="text" name="email" placeholder="Email" />
+            <h3 class="fs-subtitle">Enter the below details</h3>
+            {% if email %}
+                <input type="text" name="email" placeholder="{{ email }}" />
+            {% else %}
+                <input type="text" name="email" placeholder="Email Address" />
+            {% endif %}
             <input type="password" name="pass" placeholder="Password" />
             <input type="password" name="cpass" placeholder="Confirm Password" />
             <input type="button" name="next" class="next action-button" value="Next" />
