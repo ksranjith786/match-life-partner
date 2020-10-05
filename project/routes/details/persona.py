@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, url_for, request, jsonify
 from werkzeug.security import check_password_hash
 
-from database.database import UsersAccount, queryUserFromDB, queryUserAccountFromDB
+from database.useraccount import UsersAccount, queryUserAccountFromDB
+from database.userdetails import User, queryUserFromDB
 
 persona_bp = Blueprint('persona', __name__, url_prefix='/persona')
 

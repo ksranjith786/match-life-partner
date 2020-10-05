@@ -1,13 +1,14 @@
 from flask import Blueprint, render_template, url_for, request, jsonify
 from werkzeug.security import check_password_hash
 
-from database.database import UsersAccount, queryUserFromDB, queryUserAccountFromDB
+from database.useraccount import UsersAccount, queryUserAccountFromDB
+from database.userdetails import User, queryUserFromDB
 
 query_bp = Blueprint('query', __name__, url_prefix='/query')
 
 @query_bp.route('', methods=['GET'])
 def query():
-    email = request.form.get("email", default="test@test.com", type = str)
+    email = request.args.get("email", type = str)
     print(email)
     rs = queryUserAccountFromDB("email", email)
     if rs is None:

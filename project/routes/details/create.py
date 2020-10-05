@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from werkzeug.security import generate_password_hash
 
-from database.database import addUserDetailsToDB
+from database.useraccount import addUserAccountToDB, queryUserAccountFromDB
+from database.userdetails import addUserDetailsToDB
 
 create_bp = Blueprint('create', __name__, url_prefix='/create')
 
@@ -24,9 +25,26 @@ def create():
 
     password = generate_password_hash(request.form.get("pass", type = str), method='sha256', salt_length=16)
 
-    retVal = addUserDetailsToDB(email=email, password=password, fname=fname, lname=lname, age=age, gender=gender, city=city, state=state, country=country)
-
+    retVal = addUserAccountToDB(email=email, password=password)
+    
     msg = ""
+    if retVal == False:
+        msg = "Unable to add User Account as caught an exception while performing operation on UserAccount Table"
+        return render_template('register.html', errorMessage=msg, email=email)
+    
+    rs = queryUserAccountFromDB(colName='email', value=email)
+
+    loginId = 0
+    for result in rs:
+        loginId = result.id
+
+    if loginId == 0:
+        deleteUserAccountFromDB(email=email)
+        msg = "Unable to fetch the added User Account as caught an exception while performing operation on UserAccount Table"
+        return render_template('register.html', errorMessage=msg, email=email)
+
+    retVal = addUserDetailsToDB(loginid=loginId, fname=fname, lname=lname, age=age, gender=gender, city=city, state=state, country=country)
+
     if retVal == False:
         msg = "Unable to create/add User as caught an excepting while adding User Details to Database"
         return render_template('register.html', errorMessage=msg, email=email)

@@ -9,7 +9,7 @@ from routes.details.create import create_bp
 from routes.details.persona import persona_bp
 from routes.database.query import query_bp
 
-from database.database import createUserDB
+from database.database import createDB
 
 blueprints = (home_bp, login_bp, register_bp, create_bp, persona_bp, query_bp)
 
@@ -39,8 +39,8 @@ def get_config(app):
 # end get_config
 
 def create_db():
-    databaseURL = environ.get('DATABASE_URL')
-    createUserDB(databaseURL)
+    databaseURL = environ.get('DATABASE_URL', 'sqlite:///database.db')
+    createDB(databaseURL)
 # end create_db
 
 def register_blueprint(app, blueprints):
