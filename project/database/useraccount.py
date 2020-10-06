@@ -13,7 +13,7 @@ class UsersAccount(Base):
     def __repr__(self):
         return '<UsersAccount %r>' % (self.email)
 
-def queryUserAccountFromDB(colName="", value=""):
+def queryUserAccount(colName="", value=""):
     db_session = getDBSession()
     
     try:
@@ -39,10 +39,10 @@ def queryUserAccountFromDB(colName="", value=""):
 
     #print("No.of Records matched:", noOfRecords)
     return rs
-# end queryUserAccountFromDB
+# end queryUserAccount
 
 
-def addUserAccountToDB(email="", password=""):
+def addUserAccount(email="", password=""):
     db_session = getDBSession()
 
     try:
@@ -57,13 +57,13 @@ def addUserAccountToDB(email="", password=""):
         return False
 
     return True
-# end addUserAccountToDB
+# end addUserAccount
 
-def deleteUserAccountFromDB(email=""):
+def deleteUserAccount(email=""):
     db_session = getDBSession()
 
     try:
-        userAcc = queryUserAccountFromDB(colName='email', value=email)
+        userAcc = queryUserAccount(colName='email', value=email)
 
         db_session.delete(userAcc)
         db_session.commit()
@@ -74,4 +74,4 @@ def deleteUserAccountFromDB(email=""):
         return False
 
     return True
-# end deleteUserAccountFromDB
+# end deleteUserAccount

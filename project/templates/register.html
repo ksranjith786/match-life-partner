@@ -217,7 +217,7 @@
             <h2 class="fs-title">Create your account</h2>
             <h3 class="fs-subtitle">Enter the below details</h3>
             {% if email %}
-                <input type="text" name="email" placeholder="{{ email }}" />
+                <input type="text" name="email" value="{{ email }}" />
             {% else %}
                 <input type="text" name="email" placeholder="Email Address" />
             {% endif %}

@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, url_for, request, jsonify
 from werkzeug.security import check_password_hash
 
-from database.useraccount import UsersAccount, queryUserAccountFromDB
-from database.userdetails import User, queryUserFromDB
+from database.useraccount import UsersAccount, queryUserAccount
+from database.userdetails import User, queryUser
 
 query_bp = Blueprint('query', __name__, url_prefix='/query')
 
@@ -10,7 +10,7 @@ query_bp = Blueprint('query', __name__, url_prefix='/query')
 def query():
     email = request.args.get("email", type = str)
     print(email)
-    rs = queryUserAccountFromDB("email", email)
+    rs = queryUserAccount("email", email)
     if rs is None:
         msg = "No such Email to fetch an User"
         return msg
@@ -22,7 +22,7 @@ def query():
         else:
             return "Invalid Credentials! Please try again."
 
-    rs = queryUserFromDB("loginid", loginIdFromDB)
+    rs = queryUser("loginid", loginIdFromDB)
     if rs is None:
         msg = "No such Email to fetch an User"
         return msg

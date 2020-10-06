@@ -26,7 +26,7 @@ class User(Base):
         return '<User %r>' % (self.fname)
 
 
-def queryUserFromDB(colName="", value=""):
+def queryUser(colName="", value=""):
     db_session = getDBSession()
     
     try:
@@ -58,14 +58,14 @@ def queryUserFromDB(colName="", value=""):
 
     #print("No.of Records matched:", noOfRecords)
     return rs
-# end queryUserFromDB
+# end queryUser
 
 
-def addUserDetailsToDB(loginId=0, email="", fname="", lname="", age=18, gender="Male", city="", state="", country=""):
+def addUser(loginid=0, email="", fname="", lname="", age=18, gender="Male", city="", state="", country=""):
     db_session = getDBSession()
     
     try:
-        user = User(loginid=loginId, fname=fname, lname=lname, age=age, gender=gender, city=city, state=state, country=country)
+        user = User(loginid=loginid, fname=fname, lname=lname, age=age, gender=gender, city=city, state=state, country=country)
 
         db_session.add(user)
         db_session.commit()
@@ -76,4 +76,4 @@ def addUserDetailsToDB(loginId=0, email="", fname="", lname="", age=18, gender="
         return False
 
     return True
-# end addUserToDB
+# end addUser

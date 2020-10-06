@@ -186,10 +186,14 @@
         </ul>
         <!-- fieldsets -->
         <fieldset>
-            <h2 class="fs-subtitle" style="color:Tomato; background-color: yellow;">{{ registeredMessage }}</h2>
+            <h2 class="fs-subtitle" style="color:Tomato; background-color: yellow;">{{ displayMessage }}</h2>
             <h2 class="fs-title">Login to your account</h2>
             <h3 class="fs-subtitle">Please enter your details</h3>
-            <input type="text" name="email" placeholder="Email" />
+            {% if email %}
+                <input type="text" name="email" value="{{ email }}" />
+            {% else %}
+                <input type="text" name="email" placeholder="Email Address" />
+            {% endif %}
             <input type="password" name="pass" placeholder="Password" />
             <input type="submit" name="login" class="submit action-button" value="Login" />
             <br>
