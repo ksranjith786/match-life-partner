@@ -14,10 +14,11 @@ from routes.details.education import education_bp
 from routes.details.family import family_bp
 from routes.details.profession import profession_bp
 from routes.details.property import property_bp
+from routes.details.vehicle import vehicle_bp
 
 from database.database import createDB
 
-blueprints = (home_bp, login_bp, register_bp, create_bp, persona_bp, query_bp, basic_additional_bp, location_bp, education_bp, family_bp, profession_bp, property_bp)
+blueprints = (home_bp, login_bp, register_bp, create_bp, persona_bp, query_bp, basic_additional_bp, location_bp, education_bp, family_bp, profession_bp, property_bp, vehicle_bp)
 
 def create_app():
     app = Flask(__name__)
