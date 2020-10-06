@@ -42,3 +42,36 @@ def query():
 
     return jsonify(users)
 # end query
+
+@query_bp.route('/all', methods=['GET'])
+def queryAll():
+    rs = queryUserAccount("email", "@")
+    if rs is None:
+        msg = "No such Email to fetch an User"
+        return msg
+
+    users = []
+    loginIdFromDB = 0
+    for result in rs:
+        if result:
+            loginIdFromDB = result.id
+            rssub = queryUser("loginid", loginIdFromDB)
+            if rssub is None:
+                msg = "No such Email to fetch an User"
+                return msg
+            for result in rssub:
+                user = dict()
+                user['First Name'] = result.fname
+                user['Last Name'] = result.lname
+                user['Age'] = result.age
+                user['Gender'] = result.gender
+                user['City'] = result.city
+                user['State'] = result.state
+                user['Country'] = result.country
+                user['loginid'] = result.loginid
+                users.append(user)
+        else:
+            return "Invalid Credentials! Please try again."    
+        
+    return jsonify(users)
+# end query
